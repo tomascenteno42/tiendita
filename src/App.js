@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
-import './index.css';
 
-import Router from './components/Router';
+
+import ProtectedRouter from './components/ProtectedRouter';
 
 class App extends Component {
   render() {
     return (
-        <Router />
+        <ProtectedRouter />
     );
   }
 }

@@ -1,35 +1,37 @@
-import React, { Component, useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
-import { newProduct, fetchProducts } from '../redux/actions/productAction';
-import { connect, useDispatch } from 'react-redux';
+import { newProduct } from '../redux/actions/productAction';
+import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import Products from './Products';
+import { useHistory } from 'react-router-dom';
 
 
 
-function Create(props) {
-    const [name, setName] = useState();
-    const [price, setPrice] = useState();
+function Create({ newProduct }) {
 
-    const dispatch = useDispatch();
+    const history = useHistory();
 
+    const [product, setProduct] = useState({
+        name: '',
+        price: ''
+    });
 
     const handleChange = (event) => {
-        if(event.target.name === 'name') {
-            setName(event.target.value);
-        } else {
-            setPrice(event.target.value);
-        }  
+        setProduct({
+            ...product,
+            [event.target.name]: event.target.value
+        });
     }
 
     const handleSubmit = (event) => {
         event.preventDefault();
         
-        dispatch(newProduct({ name, price }))
+        newProduct(product)
             .then(() => {
-                alert(`${name} uploaded succesfully`);
+                alert(`${product.name} uploaded succesfully`);
+                history.push("/products");
             }).catch(() => {
                 alert("There is an error with your data");
             })
@@ -41,7 +43,7 @@ function Create(props) {
             <Form onSubmit={handleSubmit} className="mx-auto my-auto " style={{width: '30%'}} >
                 <Form.Group controlId="formGroupName">
                         <Form.Label>Product name: </Form.Label>
-                        <Form.Control type="text" placeholder="Ej: Botines nike F-150" onChange={handleChange} value={name} name="name" />
+                        <Form.Control type="text" placeholder="Ej: Botines nike F-150" onChange={handleChange} value={product.name} name="name" />
                         <small id="productHelpBlock" className="form-text text-muted">
                             Make sure to include usefull information.
                         </small>
@@ -49,7 +51,7 @@ function Create(props) {
 
                 <Form.Group controlId="formGroupPrice">
                         <Form.Label>Price: </Form.Label>
-                        <Form.Control type="number" className="currency" onChange={handleChange} value={price} name="price" />
+                        <Form.Control type="number" className="currency" onChange={handleChange} value={product.price} name="price" />
                 </Form.Group>
                 <Button variant="primary" type="submit">
                     Submit
@@ -61,8 +63,8 @@ function Create(props) {
 
 };
 
-const mapStateToProps = (state) => ({
-    products: state.products
+const mapDispatchToProps = (dispatch) => ({
+    newProduct: bindActionCreators(newProduct, dispatch)
 })
 
-export default connect(mapStateToProps)(Create);
+export default connect(null, mapDispatchToProps)(Create);

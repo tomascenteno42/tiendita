@@ -5,12 +5,11 @@ export const loginAction = (credentials) => {
         dispatch({ type: "LOGIN_REQUEST_START" })
         
         try {
-            const res = api.post("/auth/login", credentials);
+            const res = await api.post("/auth/login", credentials);
             dispatch({ type: "LOGIN_REQUEST_SUCCESS", data: res.data });
 
         } catch (error) {
             dispatch({ type: "LOGIN_REQUEST_FAILURE", error });
-            console.log(error);
             throw error;
         }
     }
@@ -21,14 +20,13 @@ export const registerAction = (credentials) => {
 
         dispatch({ type: "REGISTER_USER_START" })
 
-
         try {
             const res = await api.post("/auth/register", credentials);
             dispatch({ type: "REGISTER_USER_SUCCESS", data: res.data });
             return res.data;
             
         } catch (error) {
-            dispatch({ type: "REGISTER_USER_FAILURE", error });
+            dispatch({ type: "REGISTER_USER_FAILURE", error: error.sqlMessage });
             throw error;
         }
 
@@ -43,8 +41,7 @@ export const getAuthenticatedUserAction = () => {
 
         try {
             const res = await api.get("/auth/me");
-            dispatch({ type: "ME_REQUEST_SUCCESS" });
-            console.log(res);
+            dispatch({ type: "ME_REQUEST_SUCCESS", data: res.data });
             return res.data.user;
 
         } catch (error) {
@@ -57,4 +54,4 @@ export const getAuthenticatedUserAction = () => {
 
 export const logout = () => ({
     type: "LOGOUT"
-})
+});

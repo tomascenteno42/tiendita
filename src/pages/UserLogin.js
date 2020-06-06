@@ -1,25 +1,25 @@
 import React, { useState, useEffect } from "react";
-import { Link } from 'react-router-dom';
+
+import { useHistory } from "react-router-dom";
+
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
-import { loginAction } from "../redux/actions/authActions";
+
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
+import { loginAction, getAuthenticatedUserAction } from "../redux/actions/authActions";
 
 
 
-export const UserLogin = ({ login, auth }) => {
 
-    const authenticated = auth.token !== null && auth.user;
+export const UserLogin = ({ login, isAuthenticated }) => {
+
+    const history = useHistory();
 
     const [formData, setFormData] = useState({
         username: "",
         password: ""
     });
-
-    // useEffect(() => {
-
-    // }, [])
 
     const handleChange = (event) => {
         setFormData({
@@ -60,7 +60,8 @@ export const UserLogin = ({ login, auth }) => {
 }
 
 const mapStateToProps = (state) => ({
-    auth: state.auth
+    isAuthenticated: state.auth.isAuthenticated()
+
 });
 
 const mapDispatchToProps = (dispatch) => ({

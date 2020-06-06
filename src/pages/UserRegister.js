@@ -1,7 +1,5 @@
 import React, { useState, useEffect } from "react";
 
-import { Products } from "./Products.jsx";
-
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
 
@@ -11,18 +9,15 @@ import { registerAction } from "../redux/actions/authActions";
 
 import { useHistory } from "react-router-dom";
 
-export const UserRegister = ({ register, auth }) => {
+export const UserRegister = ({ register, isAuthenticated }) => {
 
     let history = useHistory();
-
-    const authenticated = auth.token !== null && auth.user;
 
     const [formData, setFormData] = useState({
         username: "",
         email: "",
         password: ""
     });
-    
 
     const handleChange = (event) => {
         setFormData({
@@ -33,12 +28,14 @@ export const UserRegister = ({ register, auth }) => {
     }
     const handleSubmit = (event) => {
         event.preventDefault();
-        register(formData);
+        register(formData)
+            .then(() => {
+                console.log("TODO OKEY")
+            }).catch((error) => {
+                console.log(error)
+            });
     }
 
-    if(authenticated) {
-        history.push("/products");
-    }
 
     return(
         <div className="d-flex" style={{height: `calc(100vh - 57px)`}}>
@@ -74,7 +71,8 @@ export const UserRegister = ({ register, auth }) => {
     );
 }
 const mapStateToProps = (state) => ({
-    auth: state.auth
+    isAuthenticated: state.auth.isAuthenticated()
+
 })
 
 const mapDispatchToProps = (dispatch) => {
