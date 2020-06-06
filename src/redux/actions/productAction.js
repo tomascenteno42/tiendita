@@ -29,3 +29,16 @@ export function newProduct(data) {
 
     }
 }
+
+export function fetchProductById(product_id) {
+    return async (dispatch) => {
+        dispatch({ type: "FETCH_PRODUCT_START" });
+        try {
+            const res = await api.get(`/products/${product_id}`);
+            dispatch({ type: "FETCH_PRODUCT_SUCCESS", product: res.data });
+        } catch (error) {
+            dispatch({ type: "FETCH_PRODUCT_FAILURE", error });
+            throw error;
+        }
+    }
+}

@@ -9,12 +9,12 @@ import { getAuthenticatedUserAction } from '../redux/actions/authActions';
 import Cart from '../pages/Cart';
 import Products from '../pages/Products';
 import Create from '../pages/Create';
-import Producto from '../pages/Producto';
+import ProductInfo from '../pages/ProductInfo';
 import UserLogin from '../pages/UserLogin';
 import UserRegister from '../pages/UserRegister';
 import Navbar from '../components/NavBar';
 
-export function ProtectedRouter({ authenticatedUser, isAuthenticated, user }) {
+export function ProtectedRouter({ authenticatedUser, isAuthenticated }) {
     
     useEffect(() => {
         authenticatedUser();   
@@ -26,30 +26,19 @@ export function ProtectedRouter({ authenticatedUser, isAuthenticated, user }) {
             <Switch>
         {isAuthenticated ? (
             <>
-                <Route exact path="/products">
-                    <Products />
-                </Route>
-                <Route exact path="/products/create">
-                    <Create />
+                <Route exact path="/products" component={ Products } />
 
-                </Route>
+                <Route exact path="/products/create" component={ Create } />
                 
-                <Route exact path="/products/:productId" component={ Producto } />        
+                <Route exact path="/products/:productId" component={ ProductInfo } />        
                 
-                <Route exact path="/cart/:id" component={ Cart } />
- 
- 
-               
+                <Route exact path="/cart" component={ Cart } />
             </>
         ): (
             <>
-                <Route exact path="/auth/register">
-                    <UserRegister />
-                </Route>
+                <Route exact path="/auth/register" component={ UserRegister } />
 
-                <Route exact path="/auth/login">
-                    <UserLogin />
-                </Route>
+                <Route exact path="/auth/login" component={ UserLogin } />
             </>  
         )}
             </Switch>                

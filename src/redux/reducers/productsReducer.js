@@ -13,15 +13,6 @@ export const productsReducer = (state = initialState, action) => {
         case "FETCH_PRODUCTS_FAILURE":
             return { ...state, isFetching: false, errorMessage: action.error.message }
 
-        case "NEW_PRODUCT_START":
-            return { ...state, isFetching: true };
-
-        case "NEW_PRODUCT_SUCCESS":
-            return { ...state, isFetching: false, data: [...state.data, action.product] };
-
-        case "NEW_PRODUCT_FAILURE":
-            return { ...state, isFetching: false, errorMessage: action.error.message }
-    
         default:
             return state;
     }

@@ -14,3 +14,16 @@ export function fetchCartProducts(user_id) {
         }
     }
 }
+
+export function addProductToCart(user_id, data) {
+    return async (dispatch) => {
+        dispatch({ type: "ADD_TO_CART_START" });
+
+        try {
+            const res = api.post(`/auth/${user_id}/cart`, data);
+            dispatch({ type: "ADD_TO_CART_SUCCESS", product: res.data });
+        } catch (error) {
+            dispatch({ type: "ADD_TO_CART_FAILURE" });
+        }
+    }
+}

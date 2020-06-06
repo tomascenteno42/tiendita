@@ -19,9 +19,9 @@ export function Products({ getProducts, products }) {
     } else {
         return(
             <div >
-                <CardColumns>
+                <CardColumns >
                         {products.data.map(product => (
-                            <Product product={product} key={product.id} addProductToCart={product.onAddToCart}/>
+                            <Product product={product} key={product.id} />
                         ))}     
                 </CardColumns>
             </div>
