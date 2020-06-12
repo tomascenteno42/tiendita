@@ -27,3 +27,17 @@ export function addProductToCart(user_id, data) {
         }
     }
 }
+
+export function updateProduct(user_id, product_id, quantity) {
+    return async (dispatch) => {
+        dispatch({ type: "UPDATE_PRODUCT_START" });
+
+        try {
+            const res = await api.patch(`/auth/${user_id}/cart/${product_id}`, {quantity});
+            dispatch({ type: "UPDATE_PRODUCT_SUCCESS", res});
+
+        } catch (error) {
+            dispatch({ type: "UPDATE_PRODUCT_FAILURE", error });
+        }
+    }
+}

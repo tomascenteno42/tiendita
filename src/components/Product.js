@@ -22,7 +22,7 @@ export const Product = ({ ownProps, addProduct, userId }) => {
 
                 <Card.Text className="d-flex mt-4">
                     <Link to={`/products/${ownProps.product.id}`}>+ info</Link>
-                    <Card.Link className="ml-auto" onClick={_handleSubmit()}><MDBIcon icon="cart-plus" size="lg"/></Card.Link>
+                    <Card.Link className="ml-auto" onClick={_handleSubmit}><MDBIcon icon="cart-plus" size="lg"/></Card.Link>
                 </Card.Text>
             </Card.Body>
         </Card>
@@ -36,5 +36,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch) => ({
     addProduct: bindActionCreators(addProductToCart, dispatch)
+    
 });
 export default connect(mapStateToProps, mapDispatchToProps)(Product);
