@@ -9,7 +9,7 @@ import { useHistory } from 'react-router-dom';
 
 
 
-function Create({ newProduct }) {
+function ProductCreate({ newProduct }) {
 
     const history = useHistory();
 
@@ -67,4 +67,4 @@ const mapDispatchToProps = (dispatch) => ({
     newProduct: bindActionCreators(newProduct, dispatch)
 })
 
-export default connect(null, mapDispatchToProps)(Create);
+export default connect(null, mapDispatchToProps)(ProductCreate);

@@ -6,9 +6,9 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { getAuthenticatedUserAction } from '../redux/actions/authActions';
 
-import Cart from '../pages/Cart';
+import Cart from '../pages/Cart.jsx';
 import Products from '../pages/Products';
-import Create from '../pages/Create';
+import Create from '../pages/ProductCreate';
 import ProductInfo from '../pages/ProductInfo';
 import UserLogin from '../pages/UserLogin';
 import UserRegister from '../pages/UserRegister';
