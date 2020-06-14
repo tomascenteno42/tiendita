@@ -39,7 +39,6 @@ function ProductCreate({ newProduct }) {
     
     return(
         <>
-        <div className="d-flex" style={{height: `calc(100vh - 57px)`}}>
             <Form onSubmit={handleSubmit} className="mx-auto my-auto " style={{width: '30%'}} >
                 <Form.Group controlId="formGroupName">
                         <Form.Label>Product name: </Form.Label>
@@ -57,7 +56,6 @@ function ProductCreate({ newProduct }) {
                     Submit
                 </Button>
             </Form>
-        </div>
         </>
     )
 

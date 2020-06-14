@@ -30,7 +30,7 @@ export function ProtectedRouter({ authenticatedUser, isAuthenticated }) {
 
                 <Route exact path="/products/create" component={ Create } />
                 
-                <Route exact path="/products/:productId" component={ ProductInfo } />        
+                <Route exact path="/product/:productId" component={ ProductInfo } />        
                 
                 <Route exact path="/cart" component={ Cart } />
             </>

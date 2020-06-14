@@ -12,88 +12,96 @@ import { bindActionCreators } from 'redux';
 import { fetchCartProducts } from '../redux/actions/cartActions';
 import { updateProduct } from '../redux/actions/cartActions';
 
-export const Cart = ({ userId, fetchCart, products, updateProduct, isFetching }) => {
+export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
+    const [productTotal, setProductTotal] = useState();
+    const [total, setTotal] = useState(0);
+
 
     useEffect(() => {
         fetchCart(userId);
     }, []);
 
-    const _handleSubmit = ( product_id ) => {
+    const _handleSubmit = (e, product_id ) => {
         const product = products.filter(x => x.id === product_id)[0];
-        product.quantity +=1;
-        updateProduct(userId, product.id, product.quantity);
-    }
-    if(isFetching) {
-        return <div>Loading...</div>
-    } else {
-        if(products.length === 0) {
-            return <div>There are no products in your cart!</div>;
+        if (e.target.name === "plusButton") {
+            product.quantity+=1;
         } else {
-            return(
-                <>
-                    <div className=" bg-warning h-100">
-                        <Row className="mr-0 h-100">
-                            <Col lg={9} className="ml-5 mt-5 pr-0 ">
-                                <Col lg={12}>
-                                    <Row>
-                                        {products.map((product) => (
-                                            <>
-                                                {(products[0] === product || products[1] === product) ? (
-                                                    <Col lg={6}> 
-                                                        <Card className="mb-4"  key={product.id}>
-                                                            <Card.Body>
-                                                                <Card.Title>{ product.name } <p className="text-right font-weight-bold">{ product.price }$</p></Card.Title>
-                                                                <div>
-                                                                    <Link to={`/products/${product.id}`}>+ info</Link>
-                                                                    <Button variant="dark" onClick={ (e) => _handleSubmit( product.id)}>+</Button>
-                                                                    <span>{product.quantity}</span>
-                                                                    <Button variant="dark" onClick={(e) => _handleSubmit( product.id)}>-</Button>
-                                                                </div>
-                                                            </Card.Body>
-                                                        </Card>
-                                                    </Col>
-                                                ) : (
-                                                    <Col  lg={{span: 4}} > 
-                                                        <Card className="mb-4"  key={product.id}>
-                                                            <Card.Body>
-                                                                <Card.Title>{ product.name } <p className="text-right font-weight-bold">{ product.price }$</p></Card.Title>
-                                                                <div>
-                                                                    <Link to={`/products/${product.id}`}>+ info</Link>
-                                                                    <Button variant="dark" onClick={(e) => _handleSubmit( product.id)}>+</Button>
-                                                                    <span>{product.quantity}</span>
-                                                                    <Button variant="dark" onClick={(e) => _handleSubmit( product.id)}>-</Button>
-                                                                </div>
-                                                            </Card.Body>
-                                                        </Card>
-                                                    </Col>
-                                                )}
-    
-                                            </>
-                                        ))}
-                                    </Row>
-                                </Col>
-                            </Col>
-                            <Col className="mr-5 mt-5" >
-                                <Card>
-                                    
-                                    <Card.Body>
-                                        <Card.Title>
-                                            <p>Checkout</p>
-                                        </Card.Title>
-                                        
-                                        <span>Total: </span>
-                                        <Button>Checkout</Button>
-                                    </Card.Body>
-                                </Card>
-                            </Col>
-                        </Row>
-                    </div>
-                    
-                </>
-            )
+            product.quantity-=1;
         }
+        updateProduct(product.id, product.quantity);
     }
+    const _handleTotal = (product) => {
+        // products.forEach(product => {
+        //     setTotal(total+=product.quantity * product.price)
+        // });
+        console.log(total);
     }
+    if(!products) {
+        return null;
+    } else {   
+        return(
+            <>
+                <Row className="mr-0 h-100">
+                    <Col lg={9} className="ml-5 mt-5 pr-0 ">
+                        <Col lg={12}>
+                            <Row>
+                                {products.map((product) => (
+                                    <>
+                                        {(products[0] === product || products[1] === product) ? (
+                                            <Col lg={6}> 
+                                                <Card className="mb-4"  key={product.id}>
+                                                    <Card.Body>
+                                                        <Card.Title>{ product.name } <p className="text-right font-weight-bold">{ product.price }$</p></Card.Title>
+                                                        <div>
+                                                            <Link to={`/products/${product.id}`}>+ info</Link>
+                                                            <Button name="plusButton" variant="dark" onClick={ (e) => _handleSubmit(e, product.id)}>+</Button>
+                                                            <span>{product.quantity}</span>
+                                                            <Button name="minusButton" variant="dark" onClick={(e) => _handleSubmit(e, product.id)}>-</Button>
+                                                        </div>
+                                                    </Card.Body>
+                                                </Card>
+                                            </Col>
+                                        ) : (
+                                            <Col  lg={{span: 4}} > 
+                                                <Card className="mb-4"  key={product.id}>
+                                                    <Card.Body>
+                                                        <Card.Title>{ product.name } <p className="text-right font-weight-bold">{ product.price }$</p></Card.Title>
+                                                        <div>
+                                                            <Link to={`/products/${product.id}`}>+ info</Link>
+                                                            <Button name="plusButton" variant="dark" onClick={(e) => _handleSubmit(e, product.id)}>+</Button>
+                                                            <span>{product.quantity}</span>
+                                                            <Button name="minusButton" variant="dark" onClick={(e) => _handleSubmit(e, product.id)}>-</Button>
+                                                        </div>
+                                                    </Card.Body>
+                                                </Card>
+                                            </Col>
+                                        )}
+
+                                    </>
+                                ))}
+                            </Row>
+                        </Col>
+                    </Col>
+                    <Col lg={2} className="m-5" >
+                        <Card>
+                            
+                            <Card.Body>
+                                <Card.Title>
+                                    <p>Checkout</p>
+                                </Card.Title>
+
+                                
+                                <p>Total:</p>
+
+                                <Button onClick={(e) => _handleTotal()}>Checkout</Button>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                </Row>
+            </>
+        )
+    }  
+}
     
 
 const mapStateToProps = (state) => ({

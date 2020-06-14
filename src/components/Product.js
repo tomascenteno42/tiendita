@@ -24,7 +24,7 @@ export const Product = ({ ownProps, addProductToCart }) => {
                     <Card.Title className="d-flex">{ ownProps.product.name } <span className="text-right font-weight-bold ml-auto">{ ownProps.product.price }$</span> </Card.Title>
 
                     <Card.Text className="d-flex mt-4">
-                        <Link to={`/products/${ownProps.product.id}`}>+ info</Link>
+                        <Link to={`/product/${ownProps.product.id}`}>+ info</Link>
                         <Card.Link className="ml-auto" onClick={_handleSubmit}><MDBIcon icon="cart-plus" size="lg"/></Card.Link>
                     </Card.Text>
                 </Card.Body>
