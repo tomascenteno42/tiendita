@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import Form from 'react-bootstrap/Form';
 import Button from 'react-bootstrap/Button';
@@ -9,7 +9,7 @@ import { registerAction } from "../redux/actions/authActions";
 
 import { useHistory } from "react-router-dom";
 
-export const UserRegister = ({ register, isAuthenticated }) => {
+export const UserRegister = ({ register }) => {
 
     let history = useHistory();
 
@@ -34,6 +34,7 @@ export const UserRegister = ({ register, isAuthenticated }) => {
             }).catch((error) => {
                 console.log(error)
             });
+        history.push("/products");
     }
 
 

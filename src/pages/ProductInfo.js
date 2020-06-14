@@ -12,7 +12,7 @@ export function ProductInfo({ getProduct, product, product_id } ) {
             
         useEffect(() => {
             getProduct(product_id);
-        }, []);
+        }, [getProduct, product_id]);
 
         return (
             <>

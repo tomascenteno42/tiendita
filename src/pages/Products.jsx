@@ -13,7 +13,7 @@ export function Products({ getProducts, products }) {
     
     useEffect(() => {    
         getProducts();        
-    }, []);
+    }, [getProducts]);
 
     if(products.length === 0) {
         return null;

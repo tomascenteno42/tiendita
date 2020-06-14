@@ -18,7 +18,7 @@ export function ProtectedRouter({ authenticatedUser, isAuthenticated }) {
     
     useEffect(() => {
         authenticatedUser();   
-    }, []);
+    }, [authenticatedUser]);
     return(
         <BrowserRouter>
             <Navbar />

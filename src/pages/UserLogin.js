@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 
 import { useHistory } from "react-router-dom";
 
@@ -7,7 +7,7 @@ import Button from 'react-bootstrap/Button';
 
 import { bindActionCreators } from "redux";
 import { connect } from "react-redux";
-import { loginAction, getAuthenticatedUserAction } from "../redux/actions/authActions";
+import { loginAction } from "../redux/actions/authActions";
 
 
 
@@ -31,6 +31,7 @@ export const UserLogin = ({ login, isAuthenticated }) => {
     const handleSubmit = (event) => {
         event.preventDefault();
         login(formData);
+        history.push("/products");
     }
 
     return(

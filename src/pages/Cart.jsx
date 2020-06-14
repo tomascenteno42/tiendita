@@ -13,13 +13,13 @@ import { fetchCartProducts } from '../redux/actions/cartActions';
 import { updateProduct } from '../redux/actions/cartActions';
 
 export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
-    const [productTotal, setProductTotal] = useState();
-    const [total, setTotal] = useState(0);
-
+    const [total, setTotal] = useState();
+   
 
     useEffect(() => {
         fetchCart(userId);
-    }, []);
+        
+    }, [fetchCart, userId]);
 
     const _handleSubmit = (e, product_id ) => {
         const product = products.filter(x => x.id === product_id)[0];
@@ -28,14 +28,14 @@ export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
         } else {
             product.quantity-=1;
         }
+        let tot =0;
+        products.map((product)=> {
+            return tot += product.price * product.quantity;
+        })
+        setTotal(tot);
         updateProduct(product.id, product.quantity);
     }
-    const _handleTotal = (product) => {
-        // products.forEach(product => {
-        //     setTotal(total+=product.quantity * product.price)
-        // });
-        console.log(total);
-    }
+    
     if(!products) {
         return null;
     } else {   
@@ -89,11 +89,17 @@ export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
                                 <Card.Title>
                                     <p>Checkout</p>
                                 </Card.Title>
-
+                                        {products.map((product) => {
+                                            return <p>{product.name}: {product.price * product.quantity} $</p>
+                                        })}    
+                                {(total !== null) ? (
+                                    <p>total:{total} $</p>
+                                ) : (
+                                    <div>0</div>
+                                    ) }
                                 
-                                <p>Total:</p>
-
-                                <Button onClick={(e) => _handleTotal()}>Checkout</Button>
+                                        
+                                <Button >Checkout</Button>
                             </Card.Body>
                         </Card>
                     </Col>
