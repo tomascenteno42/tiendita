@@ -6,6 +6,7 @@ import { Card } from "react-bootstrap";
 import { Button } from "react-bootstrap";
 import { Row } from "react-bootstrap";
 import { Col } from "react-bootstrap";
+import { Modal } from "react-bootstrap"
 
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -15,7 +16,20 @@ import { updateProduct } from '../redux/actions/cartActions';
 export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
     const [total, setTotal] = useState();
    
+    const [show, setShow] = useState(false);
 
+    const _handleClose = () => setShow(false);
+    const _handleShow = () => {
+        setShow(true);
+        let tot =0;
+        products.map((product)=> {
+            return tot += product.price * product.quantity;
+        })
+        setTotal(tot);
+    }
+    const _handleTotal = () => {
+        
+    }
     useEffect(() => {
         fetchCart(userId);
         
@@ -28,11 +42,7 @@ export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
         } else {
             product.quantity-=1;
         }
-        let tot =0;
-        products.map((product)=> {
-            return tot += product.price * product.quantity;
-        })
-        setTotal(tot);
+        
         updateProduct(product.id, product.quantity);
     }
     
@@ -45,6 +55,7 @@ export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
                     <Col lg={9} className="ml-5 mt-5 pr-0 ">
                         <Col lg={12}>
                             <Row>
+                            <Button onClick={_handleShow}>Checkout</Button>
                                 {products.map((product) => (
                                     <>
                                         {(products[0] === product || products[1] === product) ? (
@@ -76,34 +87,35 @@ export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
                                                 </Card>
                                             </Col>
                                         )}
-
                                     </>
                                 ))}
                             </Row>
                         </Col>
                     </Col>
-                    <Col lg={2} className="m-5" >
-                        <Card>
-                            
-                            <Card.Body>
-                                <Card.Title>
-                                    <p>Checkout</p>
-                                </Card.Title>
-                                        {products.map((product) => {
-                                            return <p>{product.name}: {product.price * product.quantity} $</p>
-                                        })}    
-                                {(total !== null) ? (
-                                    <p>total:{total} $</p>
-                                ) : (
-                                    <div>0</div>
-                                    ) }
-                                
-                                        
-                                <Button >Checkout</Button>
-                            </Card.Body>
-                        </Card>
-                    </Col>
                 </Row>
+                <Modal show={show} onHide={_handleClose}>
+                    <Modal.Header closeButton>
+                    <Modal.Title>Checkout</Modal.Title>
+                    </Modal.Header>
+                    <Modal.Body>
+                        {products.map((product) => {
+                            return <p>{product.name}: {product.price * product.quantity} $</p>
+                        })}    
+                        {(total !== null) ? (
+                            <p>total: {total} $</p>
+                        ) : (
+                            <div>0</div>
+                        ) }
+                    </Modal.Body>
+                    <Modal.Footer>
+                        <Button variant="secondary" onClick={_handleClose}>
+                            Later
+                        </Button>
+                        <Button variant="primary" onClick={_handleClose}>
+                            Proceed to ckeckout
+                        </Button>
+                    </Modal.Footer>
+                </Modal>
             </>
         )
     }  
