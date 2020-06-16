@@ -38,8 +38,9 @@ function ProductCreate({ newProduct }) {
     }
     
     return(
-        <>
-            <Form onSubmit={handleSubmit} className="mx-auto my-auto " style={{width: '30%'}} >
+    
+        <div className="d-flex align-items-center justify-content-center" style={{height: "80%"}}>
+            <Form onSubmit={handleSubmit} style={{width: '30%'}} >
                 <Form.Group controlId="formGroupName">
                         <Form.Label>Product name: </Form.Label>
                         <Form.Control type="text" placeholder="Ej: Botines nike F-150" onChange={handleChange} value={product.name} name="name" />
@@ -50,13 +51,11 @@ function ProductCreate({ newProduct }) {
 
                 <Form.Group controlId="formGroupPrice">
                         <Form.Label>Price: </Form.Label>
-                        <Form.Control type="number" className="currency" onChange={handleChange} value={product.price} name="price" />
+                        <Form.Control type="number" className="currency" placeholder="$$$" onChange={handleChange} value={product.price} name="price" />
                 </Form.Group>
-                <Button variant="primary" type="submit">
-                    Submit
-                </Button>
+                <Button variant="dark" type="submit" className="m-0">Submit</Button>
             </Form>
-        </>
+        </div>
     )
 
 };

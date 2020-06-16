@@ -15,16 +15,18 @@ export function ProductInfo({ getProduct, product, product_id } ) {
         }, [getProduct, product_id]);
 
         return (
-            <>
-                <Card style={{ width: '100%' }}>       
-                    <Card.Body>
+            <div className="d-flex align-items-center justify-content-center h-100">
+                <Card >       
+                    <Card.Body> 
                         <Card.Title>{ product.name }</Card.Title>
                         <Card.Subtitle>{ product.price } $</Card.Subtitle>
-                        <Card.Text> Producto re zarpado en cheto </Card.Text>
-                        <Card.Link><MDBIcon icon="cart-plus"  /></Card.Link>
                      </Card.Body>
+                     <Card.Body>
+                        <Card.Text > Producto re zarpado en cheto </Card.Text>
+                        <Card.Link><MDBIcon icon="cart-plus"  /></Card.Link>
+                    </Card.Body>
                 </Card>
-            </>
+            </div>
         )
 }
 const mapStateToProps = (state, ownProps) => ({

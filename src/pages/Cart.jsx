@@ -27,9 +27,6 @@ export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
         })
         setTotal(tot);
     }
-    const _handleTotal = () => {
-        
-    }
     useEffect(() => {
         fetchCart(userId);
         
@@ -51,46 +48,31 @@ export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
     } else {   
         return(
             <>
-                <Row className="mr-0 h-100">
-                    <Col lg={9} className="ml-5 mt-5 pr-0 ">
-                        <Col lg={12}>
-                            <Row>
-                            <Button onClick={_handleShow}>Checkout</Button>
+                <div className="d-flex">
+                    <Button variant="dark" className="ml-auto" onClick={_handleShow}>Checkout</Button>
+                </div>
+                <Row className="mx-5">
+                    <Col lg={12} className="my-4 pr-0 ">
+                            <Row className="mr-0">
                                 {products.map((product) => (
-                                    <>
-                                        {(products[0] === product || products[1] === product) ? (
-                                            <Col lg={6}> 
-                                                <Card className="mb-4"  key={product.id}>
-                                                    <Card.Body>
-                                                        <Card.Title>{ product.name } <p className="text-right font-weight-bold">{ product.price }$</p></Card.Title>
-                                                        <div>
-                                                            <Link to={`/products/${product.id}`}>+ info</Link>
-                                                            <Button name="plusButton" variant="dark" onClick={ (e) => _handleSubmit(e, product.id)}>+</Button>
-                                                            <span>{product.quantity}</span>
-                                                            <Button name="minusButton" variant="dark" onClick={(e) => _handleSubmit(e, product.id)}>-</Button>
-                                                        </div>
-                                                    </Card.Body>
-                                                </Card>
-                                            </Col>
-                                        ) : (
-                                            <Col  lg={{span: 4}} > 
-                                                <Card className="mb-4"  key={product.id}>
-                                                    <Card.Body>
-                                                        <Card.Title>{ product.name } <p className="text-right font-weight-bold">{ product.price }$</p></Card.Title>
-                                                        <div>
-                                                            <Link to={`/products/${product.id}`}>+ info</Link>
-                                                            <Button name="plusButton" variant="dark" onClick={(e) => _handleSubmit(e, product.id)}>+</Button>
-                                                            <span>{product.quantity}</span>
-                                                            <Button name="minusButton" variant="dark" onClick={(e) => _handleSubmit(e, product.id)}>-</Button>
-                                                        </div>
-                                                    </Card.Body>
-                                                </Card>
-                                            </Col>
-                                        )}
-                                    </>
+                                    <Col lg={4} key={product.id}> 
+                                        <Card className="mb-4"  key={product.id}>
+                                            <Card.Body>
+                                                <div className="d-flex align-items-center">
+                                                    <Card.Title className="m-0">{ product.name } </Card.Title>
+                                                    <span className="ml-auto font-weight-bold">{ product.price }$</span>
+                                                </div>
+                                                <div className="d-flex align-items-center mt-3">
+                                                    <Link to={`/products/${product.id}`}>+ info</Link>
+                                                    <Button name="plusButton" className="ml-auto" size="sm" variant="dark" onClick={ (e) => _handleSubmit(e, product.id)}>+</Button>
+                                                    <span>{product.quantity}</span>
+                                                    <Button name="minusButton" size="sm" variant="dark"  onClick={(e) => _handleSubmit(e, product.id)}>-</Button>
+                                                </div>
+                                            </Card.Body>
+                                        </Card> 
+                                    </Col>
                                 ))}
                             </Row>
-                        </Col>
                     </Col>
                 </Row>
                 <Modal show={show} onHide={_handleClose}>
@@ -99,7 +81,7 @@ export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
                     </Modal.Header>
                     <Modal.Body>
                         {products.map((product) => {
-                            return <p>{product.name}: {product.price * product.quantity} $</p>
+                            return <p key={product.id}>{product.name}: {product.price * product.quantity} $</p>
                         })}    
                         {(total !== null) ? (
                             <p>total: {total} $</p>
@@ -108,10 +90,10 @@ export const Cart = ({ userId, fetchCart, products, updateProduct }) => {
                         ) }
                     </Modal.Body>
                     <Modal.Footer>
-                        <Button variant="secondary" onClick={_handleClose}>
+                        <Button variant="dark" onClick={_handleClose}>
                             Later
                         </Button>
-                        <Button variant="primary" onClick={_handleClose}>
+                        <Button variant="success" onClick={_handleClose}>
                             Proceed to ckeckout
                         </Button>
                     </Modal.Footer>
