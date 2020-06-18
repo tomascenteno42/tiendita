@@ -30,7 +30,17 @@ export const cartReducer = (state = initialState, action) => {
     
         case "UPDATE_PRODUCT_FAILURE":
             return { ...state, isFetching: false, error: action.error };
-           
+        
+        case "DELETE_CART_PRODUCT_START":
+            return {...state, isFetching: true};
+        
+        case "DELETE_CART_PRODUCT_SUCCESS":
+            const data = state.data.filter(product => product.id !== action.product_id);
+            return {...state, isFetching: false, data };
+        
+        case "DELETE_CART_PRODUCT_FAILURE":
+            return {...state, isFetching: false, error: action.error};
+        
         default:
             return state;
     }

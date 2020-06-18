@@ -34,10 +34,22 @@ export function updateProduct(product_id, quantity) {
 
         try {
             const res = await api.patch(`/cart/${product_id}`, {quantity});
-            dispatch({ type: "UPDATE_PRODUCT_SUCCESS", res});
+            dispatch({ type: "UPDATE_PRODUCT_SUCCESS", products: res.products});
 
         } catch (error) {
             dispatch({ type: "UPDATE_PRODUCT_FAILURE", error });
+        }
+    }
+}
+export function deleteProductFromCart(product_id) {
+    return async (dispatch) => {
+        dispatch({ type: "DELETE_CART_PRODUCT_START" });
+
+        try {
+            await api.delete(`/cart/${product_id}`);
+            dispatch({ type: "DELETE_CART_PRODUCT_SUCCESS", product_id });
+        } catch (error) {
+            dispatch({ type: "DELETE_CART_PRODUCT_FAILURE", error });
         }
     }
 }
